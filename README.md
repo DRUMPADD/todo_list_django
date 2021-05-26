@@ -5,3 +5,16 @@ Simple todo list without delete and update buttons
 ```
 python manage.py runserver
 ```
+
+
+### Migrations 📁
+```
+python manage.py makemigrations
+python manage.py showmigrations
+```
+
+### Migrate 📁
+```
+python manage.py migrate
+python manage.py sqlmigrate [app_name] [nb_app_name]
+```
