@@ -16,7 +16,6 @@ python manage.py showmigrations
 ### Migrate 📁
 ```
 python manage.py migrate
-python manage.py sqlmigrate [app_name] [nb_app_name]
 ```
 
 ### Migrate to MySQL📁
