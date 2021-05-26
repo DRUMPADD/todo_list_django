@@ -18,3 +18,8 @@ python manage.py showmigrations
 python manage.py migrate
 python manage.py sqlmigrate [app_name] [nb_app_name]
 ```
+
+### Migrate to MySQL📁
+```
+python manage.py sqlmigrate [app_name] [nb_app_name]
+```
