@@ -3,7 +3,6 @@ from django.shortcuts import redirect, render
 from django.contrib.auth import login, authenticate
 from .models import Tasks
 from .forms import signUpForm
-from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -47,7 +46,17 @@ def user_login(request):
     return render(request, 'auth/login.html', {'form': form})
 
 def updateTask(request):
+    if request.method == 'POST':
+        idT = request.POST['idT']
+        nameT = request.POST['task']
+        descT = request.POST['description']
+        task = Tasks.objects.get(id_task = idT)
+        task.task_name = nameT
+        task.desc_task = descT
+        task.save()
     return redirect('/')
 
-def deleteTask(request):
+def deleteTask(request, id):
+    task = Tasks.objects.get(id_task=id)
+    task.delete()
     return redirect('/')

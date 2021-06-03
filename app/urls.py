@@ -9,5 +9,5 @@ urlpatterns = [
     path('login/', views.user_login, name='login'),
     path('logout/', authV.LogoutView.as_view(), name='logout'),
     path('updateTask', views.updateTask, name='update'),
-    path('deleteTask', views.deleteTask, name='delete'),
+    path('deleteTask/<int:id>', views.deleteTask, name='delete'),
 ]
