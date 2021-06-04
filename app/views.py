@@ -3,9 +3,10 @@ from django.shortcuts import redirect, render
 from django.contrib.auth import login, authenticate
 from .models import Tasks
 from .forms import signUpForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-
+@login_required(login_url='login/')
 def index(request):
     showTasks = Tasks.objects.all()
     context = {

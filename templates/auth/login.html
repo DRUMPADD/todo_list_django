@@ -1,3 +1,4 @@
+{% load socialaccount %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log in</title>
     <link rel="stylesheet" href="https://bootswatch.com/5/lux/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 
 <body>
@@ -47,6 +49,12 @@
                     </div>
                     <button type="submit" class="btn btn-success mt-2 form-control">Login</button>
                 </form>
+                <p class="h4 mt-3 mb-3">Or log in with another account</p>
+                <ul class="d-flex justify-content-center">
+                    <a href="" class="nav-link text-info"><i class="fab fa-facebook fa-3x"></i></a>
+                    <a href="{% provider_login_url 'google' %}" class="nav-link text-danger"><i class="fab fa-google fa-3x"></i></a>
+                    <a href="" class="nav-link text-info"><i class="fab fa-linkedin fa-3x"></i></a>
+                </ul>
             </div>
         </div>
     </div>
