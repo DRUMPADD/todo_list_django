@@ -1,4 +1,5 @@
 from django.contrib.auth.forms import AuthenticationForm
+from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth import login, authenticate
 from .models import Tasks
@@ -6,23 +7,36 @@ from .forms import signUpForm
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            form = login(request, user)
+            return redirect('/')
+    form = AuthenticationForm()
+    return render(request, 'auth/login.html', {'form': form})
+
+
 @login_required(login_url='login/')
 def index(request):
-    showTasks = Tasks.objects.all()
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            idUser = request.user.id
+        name = request.POST.get('task')
+        description = request.POST.get('description')
+        task = Tasks(task_name=name, desc_task=description, idUser_id=idUser)
+        task.save()
+    else:
+        if request.user.is_authenticated:
+            idUser = request.user.id
+    showTasks = Tasks.objects.filter(idUser_id=idUser)
     context = {
         'tasks': showTasks,
         'fields_name': Tasks._meta.fields,
     }
-    if request.method == 'POST':
-        name = request.POST.get('task')
-        description = request.POST.get('description')
-        task = Tasks(task_name=name, desc_task=description)
-        task.save()
-
-        # print(f'task: {name}\ndescription:{description}')
-        return redirect('/')
-    else:
-        return render(request, 'index.html', context)
+    return render(request, 'index.html', context)
 
 def register(request):
     if request.method == 'POST':
@@ -34,17 +48,6 @@ def register(request):
     else:
         form = signUpForm()
     return render(request, 'auth/register.html', {'form': form})
-
-def user_login(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            form = login(request, user)
-            return redirect('/')
-    form = AuthenticationForm()
-    return render(request, 'auth/login.html', {'form': form})
 
 def updateTask(request):
     if request.method == 'POST':
